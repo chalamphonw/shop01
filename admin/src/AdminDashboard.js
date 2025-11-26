@@ -13,15 +13,11 @@ const AdminDashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('adminToken');
     const email = localStorage.getItem('adminEmail');
-    
-    if (!token || !email) {
-      navigate('/login');
-    } else {
+    if (email) {
       setAdmin({ email });
     }
-  }, [navigate]);
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('adminToken');
@@ -63,7 +59,7 @@ const AdminDashboard = () => {
             className={`nav-item ${currentPage === 'dashboard' ? 'active' : ''}`}
             onClick={() => setCurrentPage('dashboard')}
           >
-            <FiHome /> {sidebarOpen && 'แdashboard'}
+            <FiHome /> {sidebarOpen && 'Dashboard'}
           </button>
           <button
             className={`nav-item ${currentPage === 'products' ? 'active' : ''}`}

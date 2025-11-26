@@ -18,10 +18,29 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(cors());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// MongoDB Connection
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log('✅ MongoDB Connected'))
-  .catch(err => console.error('❌ MongoDB Connection Error:', err));
+// MongoDB Connection with retry logic
+const connectDB = async () => {
+  let attempts = 0;
+  const maxAttempts = 5;
+  
+  while (attempts < maxAttempts) {
+    try {
+      await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/ecommerce', {
+        serverSelectionTimeoutMS: 5000,
+        socketTimeoutMS: 45000,
+      });
+      console.log('✅ MongoDB Connected');
+      return;
+    } catch (err) {
+      attempts++;
+      console.error(`❌ MongoDB Connection Error (Attempt ${attempts}/${maxAttempts}):`, err.message);
+      if (attempts < maxAttempts) {
+        await new Promise(resolve => setTimeout(resolve, 2000));
+      }
+    }
+  }
+  console.error('❌ Failed to connect to MongoDB after all attempts');
+};
 
 // Routes
 app.use('/api/auth', authRoutes);
@@ -49,6 +68,13 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-});
+
+// Start server after DB connection
+const startServer = async () => {
+  await connectDB();
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+  });
+};
+
+startServer();

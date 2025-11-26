@@ -167,7 +167,12 @@ const sampleProducts = [
 
 async function seedDatabase() {
   try {
-    await mongoose.connect(process.env.MONGODB_URI);
+    await mongoose.connect(process.env.MONGODB_URI, {
+      serverSelectionTimeoutMS: 30000,
+      socketTimeoutMS: 45000,
+      connectTimeoutMS: 30000,
+      retryWrites: true
+    });
     console.log('✅ Connected to MongoDB');
 
     // Clear existing products
