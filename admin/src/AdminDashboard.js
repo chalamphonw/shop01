@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FiLogOut, FiHome, FiBox, FiShoppingCart, FiMenu, FiX } from 'react-icons/fi';
+import { FiLogOut, FiBox, FiShoppingCart, FiMenu, FiX } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 import ProductManagement from './pages/ProductManagement';
 import OrderManagement from './pages/OrderManagement';
@@ -8,7 +8,7 @@ import './AdminDashboard.css';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
-  const [currentPage, setCurrentPage] = useState('dashboard');
+  const [currentPage, setCurrentPage] = useState('products');
   const [admin, setAdmin] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
@@ -32,12 +32,10 @@ const AdminDashboard = () => {
 
   const renderPage = () => {
     switch (currentPage) {
-      case 'products':
-        return <ProductManagement />;
       case 'orders':
         return <OrderManagement />;
       default:
-        return <Dashboard admin={admin} />;
+        return <ProductManagement />;
     }
   };
 
@@ -55,12 +53,6 @@ const AdminDashboard = () => {
         </div>
 
         <nav className="sidebar-nav">
-          <button
-            className={`nav-item ${currentPage === 'dashboard' ? 'active' : ''}`}
-            onClick={() => setCurrentPage('dashboard')}
-          >
-            <FiHome /> {sidebarOpen && 'Dashboard'}
-          </button>
           <button
             className={`nav-item ${currentPage === 'products' ? 'active' : ''}`}
             onClick={() => setCurrentPage('products')}
@@ -100,67 +92,6 @@ const AdminDashboard = () => {
           {renderPage()}
         </div>
       </main>
-    </div>
-  );
-};
-
-const Dashboard = ({ admin }) => {
-  const [stats, setStats] = useState({
-    totalProducts: 0,
-    totalOrders: 0,
-    totalRevenue: 0
-  });
-
-  return (
-    <div className="dashboard">
-      <div className="welcome">
-        <h1>ยินดีต้อนรับ, {admin.email}</h1>
-        <p>ระบบจัดการสินค้าและคำสั่งซื้อ</p>
-      </div>
-
-      <div className="stats-grid">
-        <div className="stat-card">
-          <div className="stat-icon products">📦</div>
-          <div className="stat-info">
-            <h3>สินค้า</h3>
-            <p className="stat-value">กำลังโหลด...</p>
-          </div>
-        </div>
-
-        <div className="stat-card">
-          <div className="stat-icon orders">🛒</div>
-          <div className="stat-info">
-            <h3>คำสั่งซื้อ</h3>
-            <p className="stat-value">กำลังโหลด...</p>
-          </div>
-        </div>
-
-        <div className="stat-card">
-          <div className="stat-icon revenue">💰</div>
-          <div className="stat-info">
-            <h3>รายได้</h3>
-            <p className="stat-value">กำลังโหลด...</p>
-          </div>
-        </div>
-      </div>
-
-      <div className="quick-actions">
-        <h2>การกระทำด่วน</h2>
-        <div className="actions-grid">
-          <button className="action-button">
-            <span className="icon">➕</span>
-            <span>เพิ่มสินค้าใหม่</span>
-          </button>
-          <button className="action-button">
-            <span className="icon">📋</span>
-            <span>ดูคำสั่งซื้อ</span>
-          </button>
-          <button className="action-button">
-            <span className="icon">📊</span>
-            <span>สถิติการขาย</span>
-          </button>
-        </div>
-      </div>
     </div>
   );
 };
