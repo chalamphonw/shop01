@@ -175,24 +175,24 @@
 }
 
 .btn-details {
-  border: 2px solid #0066cc;
-  color: #0066cc;
+  border: 2px solid #7f181b;
+  color: #7f181b;
   background: white;
 }
 
 .btn-details:hover {
-  background: #f0f8ff;
+  background: #fff5f5;
 }
 
 .btn-cart {
-  background: #0066cc;
+  background: #7f181b;
   color: white;
 }
 
 .btn-cart:hover:not(:disabled) {
-  background: #0052a3;
+  background: #5f1215;
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 102, 204, 0.3);
+  box-shadow: 0 4px 8px rgba(127, 24, 27, 0.3);
 }
 
 .btn-cart:disabled {
