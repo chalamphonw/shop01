@@ -1,8 +1,10 @@
 /* ====== Product Management Styles ====== */
 .product-management {
   padding: 2rem;
-  max-width: 1400px;
-  margin: 0 auto;
+  max-width: 100%;
+  width: 100%;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 .page-header {

@@ -2,12 +2,14 @@
 .admin-dashboard {
   display: flex;
   min-height: 100vh;
+  width: 100vw;
   background: #f5f7fa;
+  overflow-x: hidden;
 }
 
 /* ====== Sidebar ====== */
 .sidebar {
-  width: 250px;
+  width: 280px;
   background: linear-gradient(135deg, #1a3a52 0%, #2c5aa0 100%);
   color: white;
   display: flex;
@@ -21,7 +23,7 @@
 }
 
 .sidebar.closed {
-  width: 70px;
+  width: 80px;
 }
 
 .sidebar-header {
@@ -124,15 +126,17 @@
 
 /* ====== Main Content ====== */
 .admin-content {
-  margin-left: 250px;
+  margin-left: 280px;
   flex: 1;
+  width: calc(100vw - 280px);
   display: flex;
   flex-direction: column;
-  transition: margin-left 0.3s;
+  transition: all 0.3s;
 }
 
 .sidebar.closed ~ .admin-content {
-  margin-left: 70px;
+  margin-left: 80px;
+  width: calc(100vw - 80px);
 }
 
 .admin-header {
@@ -142,6 +146,7 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+  width: 100%;
 }
 
 .toggle-btn {
@@ -162,6 +167,8 @@
 .content-area {
   flex: 1;
   overflow-y: auto;
+  width: 100%;
+  max-width: 100%;
 }
 
 /* ====== Dashboard ====== */
