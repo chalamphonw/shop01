@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { FiChevronRight, FiDownload, FiShoppingCart } from 'react-icons/fi';
 import { useCart } from '../context/CartContext';
 import { apiClient } from '../services/api';
+import { getImageUrl } from '../utils/imageHelper';
 import './ProductDetail.css';
 
 const ProductDetail = () => {
@@ -57,13 +58,13 @@ const ProductDetail = () => {
       <div className="detail-container">
         <div className="detail-images">
           <div className="main-image">
-            <img src={product.images?.[selectedImage] || '/placeholder.jpg'} alt={product.name} />
+            <img src={getImageUrl(product.images?.[selectedImage])} alt={product.name} />
           </div>
           <div className="thumbnail-images">
             {product.images?.slice(0, 4).map((img, idx) => (
               <img
                 key={idx}
-                src={img}
+                src={getImageUrl(img)}
                 alt={`${product.name} ${idx + 1}`}
                 className={selectedImage === idx ? 'active' : ''}
                 onClick={() => setSelectedImage(idx)}
@@ -135,7 +136,12 @@ const ProductDetail = () => {
           </div>
 
           {product.datasheet && (
-            <a href={product.datasheet} download className="datasheet-link">
+            <a
+              href={getImageUrl(product.datasheet)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="datasheet-link"
+            >
               <FiDownload /> ดาวน์โหลด Datasheet
             </a>
           )}
@@ -152,7 +158,7 @@ const ProductDetail = () => {
                 className="recommended-card"
                 onClick={() => navigate(`/product/${item._id}`)}
               >
-                <img src={item.images?.[0] || '/placeholder.jpg'} alt={item.name} />
+                <img src={getImageUrl(item.images?.[0])} alt={item.name} />
                 <h4>{item.name}</h4>
                 <p className="price">฿{(item.promotion?.discountedPrice || item.price).toLocaleString()}</p>
               </div>

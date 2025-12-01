@@ -1,7 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FiTrash2, FiShoppingBag } from 'react-icons/fi';
+import { FiTrash2, FiShoppingCart } from 'react-icons/fi';
 import { useCart } from '../context/CartContext';
+import { getImageUrl } from '../utils/imageHelper';
 import './Cart.css';
 
 const Cart = () => {
@@ -46,7 +47,7 @@ const Cart = () => {
                 return (
                   <tr key={item._id}>
                     <td className="product-name">
-                      <img src={item.images?.[0] || '/placeholder.jpg'} alt={item.name} />
+                      <img src={getImageUrl(item.images?.[0])} alt={item.name} />
                       <div>
                         <h4>{item.name}</h4>
                         <small>{item.category === 'solar' && '🔆'} {item.category === 'software' && '💻'} {item.category === 'network' && '🌐'}</small>

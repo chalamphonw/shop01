@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { FiArrowRight, FiShoppingCart, FiTruck, FiShield, FiCreditCard, FiZap } from 'react-icons/fi';
 import { apiClient } from '../services/api';
 import { useCart } from '../context/CartContext';
+import { getImageUrl } from '../utils/imageHelper';
 import './Home.css';
 
 const Home = () => {
@@ -79,7 +80,7 @@ const Home = () => {
                 onClick={() => navigate(`/product/${product._id}`)}
               >
                 <div className="product-image">
-                  <img src={product.images?.[0] || '/placeholder.jpg'} alt={product.name} />
+                  <img src={getImageUrl(product.images?.[0])} alt={product.name} />
                   <div className="product-badges">
                     {product.promotion?.isActive && (
                       <span className="badge promotion-badge">
@@ -144,7 +145,7 @@ const Home = () => {
                 onClick={() => navigate(`/product/${product._id}`)}
               >
                 <div className="product-image">
-                  <img src={product.images?.[0] || '/placeholder.jpg'} alt={product.name} />
+                  <img src={getImageUrl(product.images?.[0])} alt={product.name} />
                   <div className="product-badges">
                     {product.promotion?.isActive && (
                       <span className="badge promotion-badge">
@@ -209,7 +210,7 @@ const Home = () => {
                 onClick={() => navigate(`/product/${product._id}`)}
               >
                 <div className="product-image">
-                  <img src={product.images?.[0] || '/placeholder.jpg'} alt={product.name} />
+                  <img src={getImageUrl(product.images?.[0])} alt={product.name} />
                   <div className="product-badges">
                     {product.promotion?.isActive && (
                       <span className="badge promotion-badge">

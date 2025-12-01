@@ -1,6 +1,7 @@
 import React from 'react';
 import { FiShoppingCart, FiTag } from 'react-icons/fi';
 import { useCart } from '../context/CartContext';
+import { getImageUrl } from '../utils/imageHelper';
 import './ProductCard.css';
 
 const ProductCard = ({ product, onViewDetails }) => {
@@ -14,7 +15,7 @@ const ProductCard = ({ product, onViewDetails }) => {
     <div className="product-card">
       <div className="product-image-container">
         <img 
-          src={product.images?.[0] || '/placeholder.jpg'} 
+          src={getImageUrl(product.images?.[0])} 
           alt={product.name}
           className="product-image"
         />

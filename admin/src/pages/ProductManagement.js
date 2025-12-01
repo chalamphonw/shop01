@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FiPlus, FiSearch, FiFilter, FiEdit, FiTrash2, FiEye } from 'react-icons/fi';
 import { adminApi } from '../services/api';
+import { getImageUrl } from '../utils/imageHelper';
 import './ProductManagement.css';
 
 const ProductManagement = () => {
@@ -142,7 +143,7 @@ const ProductManagement = () => {
                   <td>{product.productId}</td>
                   <td className="product-name">
                     {product.images?.[0] && (
-                      <img src={product.images[0]} alt={product.name} />
+                      <img src={getImageUrl(product.images[0])} alt={product.name} />
                     )}
                     <span>{product.name}</span>
                   </td>
@@ -263,6 +264,29 @@ const AddProductForm = ({ product, onClose, onSave }) => {
     }
   };
 
+  const handleDatasheetUpload = async (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+
+    try {
+      setLoading(true);
+      const response = await adminApi.uploadFiles([file]);
+      const [url] = response.data.urls || [];
+      if (url) {
+        setFormData(prev => ({
+          ...prev,
+          datasheet: url
+        }));
+      }
+    } catch (error) {
+      alert('ไม่สามารถอัปโหลดไฟล์ Datasheet (PDF)');
+    } finally {
+      setLoading(false);
+      // reset input so same file can be re-selected if needed
+      e.target.value = '';
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -378,6 +402,23 @@ const AddProductForm = ({ product, onClose, onSave }) => {
                 {formData.images.map((img, idx) => (
                   <img key={idx} src={img} alt={`Preview ${idx + 1}`} />
                 ))}
+              </div>
+            )}
+          </div>
+
+          <div className="form-group full">
+            <label>อัปโหลด Datasheet (PDF)</label>
+            <input
+              type="file"
+              accept="application/pdf,.pdf"
+              onChange={handleDatasheetUpload}
+              disabled={loading}
+            />
+            {formData.datasheet && (
+              <div style={{ marginTop: '0.5rem' }}>
+                <a href={getImageUrl(formData.datasheet)} target="_blank" rel="noopener noreferrer" className="datasheet-link">
+                  ดูไฟล์ Datasheet
+                </a>
               </div>
             )}
           </div>
